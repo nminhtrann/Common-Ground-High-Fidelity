@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Ground — Espresso wizard</title>
+<style>
+  body { margin: 0; padding: 28px 20px; background: #1B120B; color: #F4F1EC; font-family: "Nunito", "Segoe UI", sans-serif; }
+  main { max-width: 420px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  h1 { font-size: 20px; margin: 0; }
+  p { font-size: 13px; line-height: 1.5; color: rgba(244,241,236,.7); margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .row2 { grid-template-columns: repeat(2, 1fr); }
+  button { border: 0; border-radius: 14px; padding: 16px 8px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; background: rgba(244,241,236,.1); color: #F4F1EC; }
+  button:active { transform: scale(.97); }
+  .ch { background: #7A3B1E; }
+  .stop { background: #1D9E75; }
+  .label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(244,241,236,.5); margin-top: 6px; }
+  #log { font-size: 12px; color: rgba(244,241,236,.6); min-height: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Espresso wizard</h1>
+  <p>Open the app in another tab of this browser, set the forecast bar to "Wizard control", then start the shot. Keys in the app tab: F faster, S slower, 1 2 3 channel, 0 clear, E end, R reset.</p>
+  <div class="label">Puck resistance</div>
+  <div class="grid row2">
+    <button data-cmd="faster">Faster flow</button>
+    <button data-cmd="slower">Slower flow</button>
+  </div>
+  <div class="label">Channel</div>
+  <div class="grid">
+    <button class="ch" data-cmd="left">Left</button>
+    <button class="ch" data-cmd="centre">Centre</button>
+    <button class="ch" data-cmd="right">Right</button>
+  </div>
+  <div class="grid row2">
+    <button data-cmd="clear">Clear channel</button>
+    <button data-cmd="reset">Reset all</button>
+  </div>
+  <button class="stop" data-cmd="stop">End the shot</button>
+  <div id="log"></div>
+</main>
+<script>
+const ch = new BroadcastChannel('espresso-wizard');
+document.querySelectorAll('[data-cmd]').forEach((b) => b.addEventListener('click', () => {
+  ch.postMessage({ cmd: b.dataset.cmd });
+  document.getElementById('log').textContent = 'Sent: ' + b.textContent;
+}));
+</script>
+</body>
+</html>
