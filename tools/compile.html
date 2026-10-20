@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Ground — Marker compiler</title>
+<style>
+  body { margin: 0; padding: 32px 20px; background: #EAE1CF; color: #2B1B12; font-family: "Nunito", "Segoe UI", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p { font-size: 14px; line-height: 1.5; margin: 0 0 16px; color: rgba(43,27,18,.75); }
+  ol { padding: 0; margin: 0 0 16px; list-style: none; display: grid; gap: 10px; }
+  li { display: flex; align-items: center; gap: 12px; background: #F4F1EC; border-radius: 14px; padding: 10px 12px; font-size: 14px; }
+  li img { width: 56px; height: 56px; object-fit: contain; background: #2B1B12; border-radius: 8px; }
+  li b { font-size: 12px; background: #2B1B12; color: #F4F1EC; border-radius: 999px; padding: 3px 9px; }
+  li span { flex: 1; overflow-wrap: anywhere; }
+  li em { font-style: normal; font-size: 12px; color: #12664D; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  button, label.btn { border: 0; border-radius: 999px; padding: 11px 18px; font: inherit; font-weight: 700; cursor: pointer; background: #1D9E75; color: #F4F1EC; }
+  label.btn { background: #F4F1EC; color: #2B1B12; }
+  input[type=file] { display: none; }
+  #log { margin-top: 14px; font-size: 13px; white-space: pre-line; }
+  a { color: #12664D; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Marker compiler</h1>
+  <p>The order below is the target index the app uses: 0 = Dedica card, 1 = pour mat, 2 = cup ring. New cards go at the end, never in between. Compile, then replace <code>targets/targets.mind</code> with the downloaded file.</p>
+  <ol id="list"></ol>
+  <div class="row">
+    <label class="btn">Add card image<input type="file" id="add" accept="image/*" multiple></label>
+    <button id="go">Compile targets.mind</button>
+  </div>
+  <div id="log"></div>
+</main>
+<script type="module">
+import { Compiler } from '../vendor/mindar/mindar-image.prod.js';
+
+const FILES = ['../cards/dedica-target.png', '../cards/pourmat-target.png', '../cards/cupring-target.png', '../cards/cupring8-target.png'];
+const items = FILES.map((src) => ({ name: src.split('/').pop(), src }));
+const $ = (id) => document.getElementById(id);
+
+function render() {
+  $('list').innerHTML = items.map((it, i) =>
+    `<li><b>${i}</b><img src="${it.src}" alt=""><span>${it.name}</span><em>${it.points ? it.points + ' feature points' : ''}</em></li>`).join('');
+}
+
+function loadImage(src) {
+  return new Promise((ok, fail) => {
+    const img = new Image();
+    img.onload = () => ok(img);
+    img.onerror = fail;
+    img.src = src;
+  });
+}
+
+async function compileAll() {
+  const images = await Promise.all(items.map((it) => loadImage(it.src)));
+  const compiler = new Compiler();
+  const list = await compiler.compileImageTargets(images, (p) => { $('log').textContent = 'Compiling… ' + p.toFixed(0) + '%'; });
+  list.forEach((d, i) => { items[i].points = d.matchingData.reduce((n, m) => n + m.maximaPoints.length + m.minimaPoints.length, 0); });
+  render();
+  return compiler.exportData();
+}
+
+$('add').addEventListener('change', (e) => {
+  [...e.target.files].forEach((f) => items.push({ name: f.name, src: URL.createObjectURL(f) }));
+  render();
+});
+
+$('go').addEventListener('click', async () => {
+  $('go').disabled = true;
+  const buf = await compileAll();
+  const url = URL.createObjectURL(new Blob([buf]));
+  $('log').innerHTML = 'Done. <a download="targets.mind" href="' + url + '">Download targets.mind</a>';
+  $('go').disabled = false;
+});
+
+window.compileAll = async () => {
+  const buf = await compileAll();
+  let s = '';
+  const b = new Uint8Array(buf);
+  for (let i = 0; i < b.length; i += 32768) s += String.fromCharCode.apply(null, b.subarray(i, i + 32768));
+  return { data: btoa(s), points: items.map((it) => it.points) };
+};
+
+render();
+</script>
+</body>
+</html>
