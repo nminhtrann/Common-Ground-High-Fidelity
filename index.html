@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Common Ground AR App</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg class="mi-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<symbol id="mi-espresso" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 2.2h2.8a1.2 1.2 0 0 1 1.2 1.3L9.2 6.6H4.8l-.4-3.1a1.2 1.2 0 0 1 1.2-1.3z"/><path d="M5.8 6.6v1.2h2.4V6.6"/><rect x="3.2" y="7.8" width="7.6" height="1.6" rx=".5"/><path d="M2.5 11.6h9.6v1.2l-1.1 3H3.6l-1.1-3z"/><path d="M12.1 12.3h8.6a1.1 1.1 0 0 1 0 2.2h-8.6"/><path d="M6.4 15.8v1.3M8.2 15.8v1.3"/><path d="M7.3 19.2c-.6.9-.9 1.5-.9 1.9a.9.9 0 0 0 1.8 0c0-.4-.3-1-.9-1.9z"/></g></symbol>
+<symbol id="mi-liveart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(.4 .5) rotate(38 7 6) scale(.9)" d="M3.4 2.4h6.8l1.7-.9-.7 2.4.8 7a1.5 1.5 0 0 1-1.5 1.7H4.3a1.5 1.5 0 0 1-1.5-1.7z"/><path d="M13.6 6.4c1 1.6 1.4 3.8 1.2 7"/><path d="M8 14.4h11.5v1.6a4.9 4.9 0 0 1-4.9 4.9h-1.7A4.9 4.9 0 0 1 8 16z"/><path d="M19.5 15.3h.5a1.8 1.8 0 0 1 0 3.6h-1.1"/></g></symbol>
+<symbol id="mi-pourover" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3.5h18l-6.2 8H9.2z"/><path d="M8.6 11.5h6.8v1.6H8.6z"/><path d="M12 14.6c-.5.7-.7 1.1-.7 1.4a.7.7 0 0 0 1.4 0c0-.3-.2-.7-.7-1.4z"/><path d="M6.5 17.6h11l-.9 3.9H7.4z"/></g></symbol>
+<symbol id="mi-aeropress" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2.2h11"/><path d="M8.2 2.2v4.6h7.6V2.2"/><path d="M5 7h14"/><rect x="6.3" y="7" width="11.4" height="10.2" rx=".8"/><path d="M9 10.3h3M9 12.6h2"/><path d="M5.6 17.2h12.8"/><path d="M7.5 19.4h9v1.3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1z"/></g></symbol>
+<symbol id="mi-immersion" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><circle cx="11.5" cy="2.6" r="1.2"/><path d="M11.5 3.8v6.6"/><path d="M5.8 6h11.4"/><rect x="6.3" y="6" width="10.4" height="15.2" rx="1.4"/><path d="M8 10.4h7"/><path d="M16.7 9h1.2a1.8 1.8 0 0 1 1.8 1.8v4.6a1.8 1.8 0 0 1-1.8 1.8h-1.2"/></g></symbol>
+<symbol id="mi-chemex" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h15l-5.3 7.8"/><path d="M4.5 2.5l5.3 7.8"/><rect x="9.3" y="10.3" width="5.4" height="2.6" rx=".6"/><path d="M14.7 11.6h1.8"/><path d="M9.8 12.9 4.3 20.6a.8.8 0 0 0 .7 1.2h14a.8.8 0 0 0 .7-1.2l-5.5-7.7"/></g></symbol>
+<symbol id="mi-mokapot" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" style="stroke-width:var(--mi-w,1.5)" stroke-linecap="round" stroke-linejoin="round"><path d="M11.8 1.8v1"/><path d="M7.8 2.8h8l1.8 8.6H6z"/><path d="M15.8 3.4l2.6-1"/><path d="M6.8 11.4h10v1.8h-10z"/><path d="M6 13.2h11.6l-1.5 8.2H7.5z"/><path d="M7.3 5.2H4.4a.9.9 0 0 0-.9.9v4.4a.9.9 0 0 0 .9.9h1.7"/></g></symbol>
+</svg>
+
+<div class="page" id="page">
+  <div class="phone" id="phoneEl">
+    <div class="phone-island"></div>
+    <div class="phone-status-bar" id="statusBar">
+      <div class="status-time">9:41</div>
+      <div class="status-icons">
+        <svg width="19" height="12" viewBox="0 0 19 12">
+          <rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" />
+          <rect x="4.8" y="5" width="3.2" height="7" rx="0.7" />
+          <rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" />
+          <rect x="14.4" y="0" width="3.2" height="12" rx="0.7" />
+        </svg>
+        <svg width="17" height="12" viewBox="0 0 17 12">
+          <path d="M8.5 3.2C10.8 3.2 12.9 4.1 14.4 5.6L15.5 4.5C13.7 2.7 11.2 1.5 8.5 1.5C5.8 1.5 3.3 2.7 1.5 4.5L2.6 5.6C4.1 4.1 6.2 3.2 8.5 3.2Z" />
+          <path d="M8.5 6.8C9.9 6.8 11.1 7.3 12 8.2L13.1 7.1C11.8 5.9 10.2 5.1 8.5 5.1C6.8 5.1 5.2 5.9 3.9 7.1L5 8.2C5.9 7.3 7.1 6.8 8.5 6.8Z" />
+          <circle cx="8.5" cy="10.5" r="1.5" />
+        </svg>
+        <svg width="27" height="13" viewBox="0 0 27 13">
+          <rect x="0.5" y="0.5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" stroke-opacity="0.35" />
+          <rect x="2" y="2" width="20" height="9" rx="2" />
+          <path d="M25 4.5V8.5C25.8 8.2 26.5 7.2 26.5 6.5C26.5 5.8 25.8 4.8 25 4.5Z" opacity="0.4" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="app">
+
+      <section class="screen" data-screen="home">
+        <div class="hm">
+          <div class="hm-head">
+            <div class="profile-text">
+              <div class="hm-greet">Common Ground</div>
+              <div class="hm-sub">What do you want to practise?</div>
+            </div>
+            <button type="button" class="icon-btn" id="arDeviceBtn" aria-label="AR glasses view"><i class="fa-solid fa-glasses icon-fa ic-ink ic-15"></i></button>
+            <button type="button" class="icon-btn" id="settingsBtn" aria-label="Settings"><i class="fa-solid fa-sliders icon-fa ic-ink ic-15"></i></button>
+          </div>
+          <div class="hm-modes">
+            <div class="hm-mode ft-esp">
+              <span class="hm-mode-k">Make a coffee</span>
+              <button type="button" class="hm-esp" data-method="espresso">
+                <i class="mi hm-mode-ic"><svg><use href="#mi-espresso"/></svg></i>
+                <strong>Espresso</strong>
+                <span class="hm-mode-sub">See the water move through your coffee, then change one thing.</span>
+                <span class="hm-mode-need"><i class="fa-solid fa-cube"></i>Uses Plate X-Ray</span>
+                <span class="hm-mode-go">Start <i class="fa-solid fa-arrow-right"></i></span>
+              </button>
+              <div class="hm-methods">
+                <button type="button" data-method="pourover"><i class="mi"><svg><use href="#mi-pourover"/></svg></i>V60</button>
+                <button type="button" data-method="aeropress"><i class="mi"><svg><use href="#mi-aeropress"/></svg></i>AeroPress</button>
+                <button type="button" data-method="immersion"><i class="mi"><svg><use href="#mi-immersion"/></svg></i>French Press</button>
+                <button type="button" data-method="chemex"><i class="mi"><svg><use href="#mi-chemex"/></svg></i>Chemex</button>
+                <button type="button" data-method="mokapot"><i class="mi"><svg><use href="#mi-mokapot"/></svg></i>Moka Pot</button>
+              </div>
+            </div>
+            <button type="button" class="hm-mode ft-art" data-mode="liveart">
+              <span class="hm-mode-k">Latte art</span>
+              <i class="mi hm-mode-ic"><svg><use href="#mi-liveart"/></svg></i>
+              <strong>LiveARt</strong>
+              <span class="hm-mode-sub">Practise the pour without milk. Your phone is the cup and the ring is the jug.</span>
+              <span class="hm-mode-need"><i class="fa-solid fa-ring"></i>Uses the Cup Ring</span>
+              <span class="hm-mode-last" id="hmLastArt"></span>
+              <span class="hm-mode-go">Start <i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+          </div>
+          <div class="hm-hero lg hidden" id="hmHero"></div>
+        </div>
+      </section>
+
+
+      <section class="screen" data-screen="grind">
+        <header class="header">
+          <button type="button" class="back-circle" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-ink ic-14"></i></button>
+          <div class="header-title">Set up</div>
+          <button type="button" class="back-circle help-btn" data-help="grind" aria-label="What am I looking at?"><i class="fa-solid fa-question icon-fa ic-ink ic-14"></i></button>
+        </header>
+        <nav class="crumbs" aria-label="Steps"></nav>
+        <div class="rv-toast" id="applyToast"></div>
+
+        <div class="grind-card">
+          <div class="grind-title" id="grindMethodName"></div>
+          <div class="grind-summary" id="grindSummary"></div>
+        </div>
+        <div class="tip-row" id="grindTipRow">
+          <i class="fa-solid fa-clock icon-fa ic-teal-dark ic-26"></i>
+          <div id="grindTip"></div>
+        </div>
+
+        <div class="pp-card" id="ppGrindCard">
+          <div class="pp-head"><div class="pp-title">Grind</div><div class="pp-val" id="ppGrindVal"></div></div>
+          <p class="px-what">Grinding turns the beans into powder. Finer powder slows the water down, coarser lets it rush through.</p>
+          <div class="pp-vis">
+            <svg class="pp-svg" viewBox="0 0 320 150" aria-hidden="true">
+              <rect width="320" height="150" fill="#FBF8F2"/>
+              <g class="pp-water" id="ppGrindWater"></g>
+              <g id="ppGrains"></g>
+              <g transform="translate(248 124)">
+                <rect x="-6" y="-14" width="68" height="24" rx="6" fill="#FBF8F2" opacity=".92"/>
+                <path d="M0 0 H50 M0 -4 V4 M50 -4 V4" stroke="#2B1B12" stroke-width="1.6" fill="none"/>
+                <text x="25" y="-5" text-anchor="middle" class="pp-svg-lab">1 mm</text>
+              </g>
+            </svg>
+            <div class="pp-tag" id="ppGrindLike"></div>
+          </div>
+          <div class="pp-dial" id="dialTicks"></div>
+          <div class="pp-bands" id="ppBands"></div>
+          <div class="pp-note" id="ppGrindNote"></div>
+        </div>
+
+        <div class="px hidden" id="prepCard">
+          <div class="px-hero" id="pxHero">
+            <svg class="px-svg" id="pxSvg" viewBox="0 0 340 206" data-step="grind" aria-hidden="true">
+              <defs>
+                <clipPath id="pxBasketClip"><path d="M32,44 L47,166 H193 L208,44 Z"/></clipPath>
+                <clipPath id="pxLoupeClip"><circle cx="276" cy="98" r="54"/></clipPath>
+                <clipPath id="pxTopClip"><circle cx="276" cy="98" r="48"/></clipPath>
+                <pattern id="pxGrains" width="30" height="30" patternUnits="userSpaceOnUse"></pattern>
+              </defs>
+              <g id="pxCam">
+                <g class="px-head">
+                  <rect x="16" y="12" width="208" height="24" rx="5" fill="#3B2A1E"/>
+                  <text x="120" y="28" text-anchor="middle" class="pp-svg-lab light">Group head</text>
+                  <path d="M22,40 H218" stroke="#3B2A1E" stroke-width="2.4" stroke-dasharray="2 3"/>
+                </g>
+                <g clip-path="url(#pxBasketClip)">
+                  <rect x="20" y="40" width="200" height="130" fill="#F2EBDD"/>
+                  <path id="pxBed" d="" fill="url(#pxGrains)"/>
+                  <rect id="pxHit" x="20" y="40" width="200" height="0" fill="#C0523E" opacity=".3"/>
+                  <g id="pxClumps" class="px-fade"></g>
+                  <g id="pxCracks" class="px-fade" stroke="#F2EBDD" stroke-width="1.6" stroke-linecap="round"></g>
+                  <g class="px-water" id="pxWater"></g>
+                </g>
+                <path d="M30,44 L45,168 H195 L210,44" fill="none" stroke="#2B1B12" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M52,172 H188" stroke="#2B1B12" stroke-width="1.4" stroke-dasharray="1.5 3"/>
+                <g class="px-water px-drips" id="pxDrips"></g>
+                <g class="px-only" data-for="dose">
+                  <line id="pxSwell" x1="36" x2="204" y1="80" y2="80" stroke="#C08552" stroke-width="1.6" stroke-dasharray="5 4"/>
+                  <text id="pxSwellTxt" x="44" y="76" class="pp-svg-lab car">Wet puck swells</text>
+                  <path id="pxDim" d="" stroke="#12664D" stroke-width="1.6" fill="none"/>
+                </g>
+                <g id="pxTamper" class="px-only" data-for="tamp">
+                  <rect x="104" y="-6" width="32" height="30" rx="12" fill="#C08552"/>
+                  <rect x="114" y="22" width="12" height="12" fill="#8C6242"/>
+                  <rect x="42" y="34" width="156" height="10" rx="2" fill="#6E747A"/>
+                </g>
+              </g>
+              <g class="px-only" data-for="grind" id="pxLoupe">
+                <circle cx="276" cy="98" r="54" fill="#FBF8F2"/>
+                <g clip-path="url(#pxLoupeClip)">
+                  <g class="px-water" id="pxLoupeWater"></g>
+                  <g id="pxLoupeGrains"></g>
+                </g>
+                <circle cx="276" cy="98" r="54" fill="none" stroke="#2B1B12" stroke-width="2.4"/>
+                <path d="M251,172 H301 M251,168 V176 M301,168 V176" stroke="#2B1B12" stroke-width="1.6"/>
+                <text x="276" y="185" text-anchor="middle" class="pp-svg-lab">1 mm · real scale</text>
+                <text id="pxLike" x="276" y="198" text-anchor="middle" class="pp-svg-lab car"></text>
+              </g>
+              <g class="px-only" data-for="dose" id="pxHead">
+                <text x="232" y="80" class="pp-svg-lab muted">Headspace</text>
+                <text id="pxHeadNum" x="232" y="104" class="px-big"></text>
+                <text x="232" y="124" class="pp-svg-lab muted">room for the puck</text>
+                <text x="232" y="136" class="pp-svg-lab muted">to swell when wet</text>
+              </g>
+              <g class="px-only" data-for="wdt" id="pxTop">
+                <circle cx="276" cy="98" r="53" fill="none" stroke="#2B1B12" stroke-width="2.2"/>
+                <g clip-path="url(#pxTopClip)">
+                  <circle cx="276" cy="98" r="48" fill="#6B4A30"/>
+                  <g id="pxTopEven" class="px-fade"></g>
+                  <g id="pxTopClumps" class="px-fade"></g>
+                  <path id="pxSpiral" d="" fill="none" stroke="#F4ECDD" stroke-width="1.1" stroke-linecap="round"/>
+                </g>
+                <text x="276" y="172" text-anchor="middle" class="pp-svg-lab">Top view</text>
+              </g>
+              <g class="px-only" data-for="tamp" transform="translate(284 44)">
+                <rect x="0" y="0" width="12" height="118" rx="6" fill="#E6DDCD"/>
+                <rect x="0" y="50" width="12" height="34" fill="#1D9E75" opacity=".28"/>
+                <rect id="pxGauge" x="0" y="118" width="12" height="0" rx="6" fill="#2B1B12"/>
+                <text id="pxGaugeTxt" x="-8" y="140" text-anchor="middle" class="pp-svg-lab"></text>
+                <text x="-8" y="152" text-anchor="middle" class="pp-svg-lab muted">force</text>
+              </g>
+              <text id="pxCaption" x="120" y="201" text-anchor="middle" class="pp-svg-lab muted">Side view of the basket</text>
+            </svg>
+          </div>
+
+          <div class="px-tabs" id="pxTabs">
+            <span class="px-pill" id="pxPill"></span>
+            <button type="button" data-step="grind"><i></i>Grind</button>
+            <button type="button" data-step="dose"><i></i>Dose</button>
+            <button type="button" data-step="wdt"><i></i>WDT</button>
+            <button type="button" data-step="tamp"><i></i>Tamp</button>
+          </div>
+
+          <div class="px-panel" id="pxPanel">
+            <div class="px-step" data-panel="grind">
+              <p class="px-what">Grinding turns the beans into powder. Finer powder slows the water down, coarser lets it rush through.</p>
+              <div class="px-row"><span class="px-k">Grind size</span><span class="px-v" id="pxGrindVal"></span></div>
+              <div class="pp-dial" id="pxDial"></div>
+              <div class="pp-bands" id="pxBands"></div>
+            </div>
+            <div class="px-step" data-panel="dose">
+              <p class="px-what">The dose is the weight of ground coffee in the basket. More coffee slows the water down, less lets it run fast.</p>
+              <div class="px-row">
+                <div class="pp-step">
+                  <button type="button" data-dose="-0.5" aria-label="Less coffee">&minus;</button>
+                  <span id="pxDoseNum">18.0 g</span>
+                  <button type="button" data-dose="0.5" aria-label="More coffee">+</button>
+                </div>
+                <div class="pp-ratio" id="pxRatio"></div>
+              </div>
+            </div>
+            <div class="px-step" data-panel="wdt">
+              <p class="px-what">WDT is stirring the grounds with thin needles. It breaks up clumps, so water flows through evenly.</p>
+              <div class="seg3" id="pxWdtSeg">
+                <button type="button" data-wdt="0">Don’t stir</button>
+                <button type="button" data-wdt="1">Stir with needles</button>
+              </div>
+            </div>
+            <div class="px-step" data-panel="tamp">
+              <p class="px-what">Tamping presses the grounds into a flat, firm bed, so water meets the same resistance everywhere.</p>
+              <div class="px-row"><span class="px-k">Pressure</span>
+                <div class="seg3" id="tampSeg">
+                  <button type="button" data-val="light">Light</button>
+                  <button type="button" data-val="ideal">Ideal</button>
+                  <button type="button" data-val="tight">Firm</button>
+                </div>
+              </div>
+              <div class="px-row"><span class="px-k">Surface</span>
+                <div class="seg3" id="pxLevelSeg">
+                  <button type="button" data-level="level">Level</button>
+                  <button type="button" data-level="tilted">Tilted</button>
+                </div>
+              </div>
+            </div>
+            <div class="px-result">
+              <div class="pp-note" id="pxNote"></div>
+            </div>
+          </div>
+
+          <div class="px-fc">
+              <div class="px-fc-k">Shot forecast<span class="px-legend"><span><i></i>Flow</span><span><i class="p"></i>Pressure</span><span class="z">25–32 s target</span></span></div>
+              <div class="px-fc-top">
+                <span class="px-time" id="pxFcTime"></span>
+                <span class="px-chip term" id="pxFcRisk" role="button" tabindex="0" data-term="channel"></span>
+                <span class="px-taste" id="pxFcTaste"></span>
+              </div>
+              <svg class="px-chart" viewBox="0 0 300 44" preserveAspectRatio="none" aria-hidden="true">
+                <rect x="125" y="0" width="35" height="44" fill="rgba(29,158,117,.16)"/>
+                <path id="pxChartP" class="px-cp" d=""/>
+                <path id="pxChartQ" class="px-cq" d=""/>
+                <line id="pxChartEnd" class="px-ce" x1="0" x2="0" y1="0" y2="44"/>
+              </svg>
+              <div class="px-tiprow"><div class="px-tip" id="pxFcTip"></div></div>
+          </div>
+          <div class="px-bar">
+            <button type="button" class="btn-primary" id="pxStart">Next</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary block" id="startBrewingBtn">Start brewing</button>
+      </section>
+
+      <section class="screen" data-screen="brew">
+        <div class="camera-screen" id="brewStage">
+          <div class="camera-layer">
+            <video id="brewVideo" class="camera-video hidden" autoplay playsinline muted></video>
+            <div id="brewFallback" class="camera-fallback">Live camera unavailable. Point the phone at your brew setup.</div>
+          </div>
+          <div class="scrim"></div>
+          <div class="corner-brackets"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+
+          <div class="camera-topbar">
+            <button type="button" class="back-circle glass" id="brewBack" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-cream ic-14"></i></button>
+            <div class="camera-title" id="brewTitle">Espresso</div>
+            <button type="button" class="back-circle glass" data-help="brew" aria-label="What am I looking at?"><i class="fa-solid fa-question icon-fa ic-cream ic-14"></i></button>
+            <button type="button" class="back-circle glass" id="glassesBtn" aria-label="Glasses view"><i class="fa-solid fa-glasses icon-fa ic-cream ic-14"></i></button>
+            
+          </div>
+
+          <nav class="crumbs dark" aria-label="Steps"></nav>
+          <div class="phase-pill-wrap">
+            <div class="phase-pill">
+              <span class="phase-dot"></span>
+              <span id="brewPhasePillName">Pre-infusion</span>
+              <span id="brewPhasePillTime">· 0:08</span>
+            </div>
+          </div>
+
+          <div class="eo-root" id="espressoOverlay">
+            <div class="eo-floor" id="eoFloor"></div>
+            <svg class="eo-xray" id="eoXray" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <clipPath id="eoCupClip"><path d="M172,486 H228 L222,532 H178 Z"/></clipPath>
+                <clipPath id="eoTankClip"><rect x="112" y="152" width="176" height="116" rx="5"/></clipPath>
+                <clipPath id="eoDetailClip"><circle cx="140" cy="620" r="68"/></clipPath>
+                <linearGradient id="eoCupGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#C8895A"/><stop offset="1" stop-color="#582E0E"/>
+                </linearGradient>
+              </defs>
+              <rect class="eo-stage" x="36" y="86" width="328" height="664" rx="28"/>
+              <g id="eoMachine">
+                <path class="eo-hid" d="M100,130 H300 V540 H100 Z"/>
+                <path class="eo-hid-soft" d="M104,146 H296"/>
+                <circle class="eo-hid-soft" cx="248" cy="192" r="6.5"/>
+                <circle class="eo-hid-soft" cx="268" cy="192" r="6.5"/>
+                <circle class="eo-hid-soft" cx="288" cy="192" r="6.5"/>
+                <rect class="eo-hid" x="112" y="152" width="176" height="116" rx="5"/>
+                <g clip-path="url(#eoTankClip)"><rect class="eo-tank-water" id="eoTankWater" x="112" y="180" width="176" height="92"/></g>
+                <rect class="eo-hid" x="175" y="290" width="50" height="90" rx="5"/>
+                <rect class="eo-block-heat" id="eoBlockHeat" x="176" y="291" width="48" height="88" rx="5"/>
+                <path class="eo-heat-wave" id="eoWave1" d="M182,306 q6,-6 12,0 t12,0"/>
+                <path class="eo-heat-wave" id="eoWave2" d="M182,298 q6,-6 12,0 t12,0"/>
+                <rect class="eo-hid" x="115" y="330" width="50" height="34" rx="5"/>
+                <rect class="eo-pump-arm" id="eoPumpArm" x="126" y="340" width="9" height="13" rx="2"/>
+                <path class="eo-hid-soft" d="M143,336 V358 M152,336 V358"/>
+                <path class="eo-hid" d="M155,395 H245 V435 H155 Z"/>
+                <path class="eo-hid-soft" d="M163,431 H237"/>
+                <path class="eo-hid" d="M162,435 H238 L232,467 H168 Z"/>
+                <rect class="eo-puck-small" x="168" y="439" width="64" height="20"/>
+                <ellipse class="eo-hid" cx="200" cy="451" rx="22" ry="13"/>
+                <path class="eo-hid" d="M172,486 H228 L222,532 H178 Z"/>
+                <g clip-path="url(#eoCupClip)"><rect class="eo-cup-fill" id="eoCupFill" x="170" y="532" width="62" height="0"/></g>
+                <path class="eo-hid-soft" d="M106,538 H294 M106,538 V556 M294,538 V556 M120,546 H280 M120,550 H280"/>
+                <path class="eo-hid-soft" d="M300,352 L326,392 L326,452"/>
+                <path class="eo-flow eo-steamline" d="M210,292 H288 V352 H300 L326,392"/>
+                <path class="eo-flow eo-cold" id="eoFTank" d="M130,268 V347 H115"/>
+                <path class="eo-flow eo-cold" id="eoFPump" d="M165,347 H190 V380"/>
+                <path class="eo-flow eo-hot" id="eoFCoil" d="M190,376 V368 H182 V356 H218 V344 H182 V332 H218 V320 H182 V308 H218 V298 H200 V292"/>
+                <path class="eo-flow eo-hot" id="eoFGroup" d="M200,290 V278 H240 V395"/>
+                <path class="eo-flow eo-hot" id="eoFPuck" d="M180,435 V448 M200,435 V448 M220,435 V448"/>
+                <path class="eo-flow eo-coffee" id="eoFSpouts" d="M190,467 V484 M210,467 V484"/>
+                <path class="eo-flow eo-coffee" id="eoFBottom" d="M176,465 L194,484 M188,465 L198,484 M200,465 L202,484 M214,465 L208,484"/>
+                <path class="eo-flow eo-release" id="eoFRelease" d="M150,435 V556 H240"/>
+                <g id="eoAnchor">
+                  <path class="eo-anchor-mark" d="M168,432 h-8 v10 M232,432 h8 v10 M168,470 h-8 v-10 M232,470 h8 v-10"/>
+                  <circle class="eo-anchor-ring" cx="200" cy="451" r="27"/>
+                </g>
+              </g>
+              <g id="eoDetail">
+                <path class="eo-detail-lead" id="eoLeadA" d="M0,0"/>
+                <path class="eo-detail-lead" id="eoLeadB" d="M0,0"/>
+                <circle class="eo-detail-ring" cx="140" cy="620" r="68"/>
+                <g clip-path="url(#eoDetailClip)">
+                  <path class="eo-basket-wall" d="M84,560 L87,700"/>
+                  <path class="eo-basket-wall" d="M196,560 L193,700"/>
+                  <line class="eo-screen-line" x1="86" y1="578" x2="194" y2="578"/>
+                  <g id="eoHoles"></g>
+                  <rect class="eo-channel-band" id="eoBand" x="120" y="590" width="34" height="58" rx="3"/>
+                  <g id="eoGrounds"></g>
+                  <line class="eo-front-line" id="eoFront" x1="88" y1="592" x2="192" y2="592"/>
+                  <g id="eoStreams"></g>
+                  <g id="eoDrops"></g>
+                  <path class="eo-plate" id="eoPlate" d="M88,650 H192 V658 H88 Z"/>
+                  <g id="eoJets"></g>
+                </g>
+                <text class="eo-detail-label" x="140" y="702" id="eoDetailLabel">PUCK &middot; SECTION</text>
+              </g>
+            </svg>
+            <div class="eo-align-surface" id="eoAlignSurface"></div>
+            <div class="eo-hud" id="eoHud">
+              <div class="eo-align-btn" id="eoAlignBtn" role="button" tabindex="0">Align</div>
+              <div class="eo-scan"><span class="eo-scan-card"></span><span id="eoScanText">Point at Plate X-Ray to see inside the machine</span></div>
+              <div class="track-hint" id="eoHint"></div>
+              <button type="button" class="eo-stand" id="eoStandBtn">View · Auto</button>
+              <div class="track-off"><b>Tracking is off</b><span data-why></span><button type="button" data-skip>Show without tracking</button></div>
+              <div class="eo-gauge" id="eoGauge">
+                <div class="eo-gauge-track"><div class="eo-gauge-fill" id="eoGaugeFill"></div><div class="eo-gauge-mark"></div></div>
+                <div class="eo-gauge-lab"><span class="eo-gauge-val" id="eoGaugeVal">0.0</span><br>bar<span class="eo-est">est</span></div>
+              </div>
+              <div class="eo-flowmeter" id="eoFlowmeter">
+                <div class="eo-fm-lab">Flow</div>
+                <div class="eo-fm-val" id="eoFlowVal">0.00</div>
+                <div class="eo-fm-bar"><span id="eoFlowBar"></span><i class="eo-fm-norm"></i></div>
+              </div>
+              <div>
+                <div class="eo-dt"><div class="k">In the cup</div><div class="v"><span id="eoDYield">0</span><small id="eoDTarget"></small></div><i><span id="eoDBar"></span></i></div>
+                <div class="eo-dt"><div class="k">Shot time</div><div class="v" id="eoDTime">0:00</div></div>
+                <div class="eo-dt"><div class="k">Ratio</div><div class="v" id="eoDRatio">1:0.0</div></div>
+                <div class="eo-dt"><div class="k">Water</div><div class="v"><span id="eoDTemp">93</span>°C<span class="eo-est">est</span></div></div>
+              </div>
+              <div id="eoCallouts"></div>
+              <div class="eo-verdict" id="eoVerdict">
+                <div class="big" id="eoVerdictBig"></div>
+                <div class="sub" id="eoVerdictSub"></div>
+                <div class="eo-stats">
+                  <div class="eo-stat"><div class="k">In the cup</div><div class="v" id="eoStatYield"></div></div>
+                  <div class="eo-stat"><div class="k">Shot time</div><div class="v" id="eoStatTime"></div></div>
+                  <div class="eo-stat"><div class="k">Ratio</div><div class="v" id="eoStatRatio"></div></div>
+                </div>
+                <div class="eo-hold"><span id="eoHold"></span></div>
+              </div>
+              <div class="eo-align-panel" id="eoAlignPanel">
+                <button type="button" data-scale="-1">&minus;</button>
+                <span id="eoAlignInfo"></span>
+                <button type="button" data-scale="1">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bt" id="brewTimer">
+            <div class="bt-step" id="btStep"></div>
+            <svg class="bc" viewBox="0 0 200 190" aria-hidden="true">
+              <defs>
+                <clipPath id="bcConeClip"><path d="M40 44 H160 L108 118 H92 Z"/></clipPath>
+                <clipPath id="bcCupClip"><rect x="68" y="134" width="64" height="40" rx="8"/></clipPath>
+              </defs>
+              <path class="bc-kettle" d="M-28 66 C-30 46 -24 32 -12 28 H0 C8 32 12 46 12 66 Z M-10 28 V22 H-2 V28"/>
+              <path class="bc-spout" d="M10 46 C 36 46, 54 8, 94 18"/>
+              <line class="bc-stream" id="bcStream" x1="95" y1="21" x2="100" y2="96"/>
+              <g clip-path="url(#bcConeClip)">
+                <rect class="bc-water" id="bcWater" x="30" y="48" width="140" height="72"/>
+                <rect class="bc-bed" id="bcBed" x="30" y="96" width="140" height="24"/>
+              </g>
+              <path class="bc-line" d="M34 44 H166 M40 44 L92 118 H108 L160 44"/>
+              <circle class="bc-drip" id="bcDrip" cx="100" cy="124" r="2.6"/>
+              <g clip-path="url(#bcCupClip)"><rect class="bc-coffee" id="bcCup" x="68" y="134" width="64" height="40"/></g>
+              <rect class="bc-line" x="68" y="134" width="64" height="40" rx="8"/>
+              <rect class="bc-scale" x="48" y="178" width="104" height="8" rx="3"/>
+            </svg>
+            <div class="bt-k" id="btK"></div>
+            <div class="bt-time" id="btTime">0:00</div>
+            <div class="bt-cue" id="btCue"></div>
+            <div class="bt-total" id="btTotal"></div>
+          </div>
+
+          <div class="eo-cause" id="eoCause"></div>
+
+          <div class="camera-controls">
+            <button type="button" class="btn-glass bt-next" id="brewNextBtn">Next</button>
+            <button type="button" class="btn-glass" id="brewFinishBtn">Skip to end</button>
+          </div>
+
+          <div class="progress-bottom">
+            <div class="progress-segments">
+              <div class="segment" id="brewSegment0"></div>
+              <div class="segment" id="brewSegment1"></div>
+              <div class="segment" id="brewSegment2"></div>
+            </div>
+            <div class="progress-labels">
+              <span id="brewLabel0"></span><span id="brewLabel1"></span><span id="brewLabel2"></span>
+            </div>
+          </div>
+
+          <div class="gl" id="glHud">
+            <div class="gl-bar">
+              <button type="button" class="gl-icon" id="glBackBtn" aria-label="Back to puck prep"><i class="fa-solid fa-chevron-left icon-fa"></i></button>
+              <button type="button" class="gl-icon" id="glExitBtn" aria-label="Back to phone view"><i class="fa-solid fa-mobile-screen-button icon-fa"></i></button>
+              <span class="gl-title">Espresso</span>
+              <span class="gl-src" data-gl="src"></span>
+              <button type="button" class="gl-icon" id="glEndBtn" aria-label="End the shot"><i class="fa-solid fa-flag-checkered icon-fa"></i></button>
+                            <button type="button" class="gl-btn" id="glViewBtn">Camera X-Ray</button>
+            </div>
+            <div class="gl-main">
+              <svg class="gl-vis" viewBox="0 0 100 160" aria-hidden="true">
+                <defs><clipPath id="glCupClip"><path d="M31 111 L69 111 L65.5 149 L34.5 149 Z"/></clipPath></defs>
+                <rect class="gl-line" x="20" y="8" width="60" height="18" rx="3"/>
+                <line class="gl-faint" x1="26" y1="30" x2="74" y2="30"/>
+                <path class="gl-puck" id="glPuck" d="M28 39 L72 39 L69.5 50 L30.5 50 Z"/>
+                <path class="gl-line" d="M24 34 L76 34 L70 52 L30 52 Z"/>
+                <line class="gl-line" x1="76" y1="40" x2="97" y2="46"/>
+                <path class="gl-line" d="M45 52 L45 58 L55 58 L55 52"/>
+                <line class="gl-stream" id="glStream" x1="50" y1="59" x2="50" y2="146"/>
+                <rect class="gl-cup" id="glCup" x="30" y="150" width="40" height="0" clip-path="url(#glCupClip)"/>
+                <path class="gl-line" d="M30 110 L70 110 L66 150 L34 150 Z"/>
+                <path class="gl-line" d="M70 118 Q80 120 78 130 Q76 138 67.5 138"/>
+              </svg>
+              <div class="gl-nums">
+                <div class="gl-phase" data-gl="phase"></div>
+                <div class="gl-row">
+                  <div class="gl-big"><span class="gl-w" id="glWeight" data-gl="weight">0.0</span><small data-gl="target">/ 36 g</small></div>
+                  <div class="gl-time"><span data-gl="time">0</span><small>s</small></div>
+                </div>
+              </div>
+              <div class="gl-flow">
+                <div class="gl-track"><div class="gl-zone"></div><div class="gl-mark" id="glMark"></div></div>
+                <div class="gl-flowv"><span data-gl="flow">0.0</span><small> g/s</small></div>
+              </div>
+              <div class="gl-msg" data-gl="msg"></div>
+            </div>
+            <div class="gl-side">
+              <div class="gl-phase" data-gl="phase"></div>
+              <div class="gl-sw"><span data-gl="weight">0.0</span><small data-gl="target">/ 36 g</small></div>
+              <div class="gl-st"><span data-gl="time">0</span><small>s</small><span class="gl-gap" data-gl="flow">0.0</span><small>g/s</small></div>
+              <div class="gl-msg" data-gl="msg"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="review">
+        <header class="header">
+          <button type="button" class="back-circle" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-ink ic-14"></i></button>
+          <div class="header-title">Result</div>
+          <button type="button" class="back-circle help-btn" data-help="review" aria-label="What am I looking at?"><i class="fa-solid fa-question icon-fa ic-ink ic-14"></i></button>
+        </header>
+        <nav class="crumbs" aria-label="Steps"></nav>
+        <div class="rv">
+          <div class="px-tabs rv-tabs" id="rvTabs">
+            <span class="px-pill" id="rvPill"></span>
+            <button type="button" data-pane="0">What happened</button>
+            <button type="button" data-pane="1">Taste</button>
+            <button type="button" data-pane="2">Next time</button>
+          </div>
+          <div class="rv-pane" data-pane="0">
+            <div class="rv-card" data-verdict="rv"></div>
+            <div class="rv-card" data-replay="rv"></div>
+          </div>
+          <div class="rv-pane" data-pane="1">
+            <div class="rv-card rv-taste" id="rvTaste">
+              <div class="rv-head"><div class="rv-title">How did it taste?</div><div class="rv-hint" id="rvTasteLab">Drag the dot</div></div>
+              <div data-compass="rv"></div>
+              <div class="rv-vsub" id="rvTasteHint"></div>
+            </div>
+          </div>
+          <div class="rv-pane" data-pane="2">
+            <div class="rv-card rv-next" id="rvNext">
+              <div class="rv-head"><div class="rv-title">Next time</div><div class="rv-hint">One change at a time</div></div>
+              <div id="rvChange"></div>
+              <div class="rv-nbig" id="rvAdvice"></div>
+              <div class="rv-vsub" id="rvWhy"></div>
+              <div id="rvCmp"></div>
+            </div>
+          </div>
+          <div class="rv-actions">
+            <button type="button" class="btn-primary" id="rvApply">Next</button>
+            <button type="button" class="btn-secondary" id="rvDone">Done</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="history">
+        <header class="header">
+          <div class="header-title">History</div>
+        </header>
+        <div class="rv">
+          <div class="rv-card hs-trend" id="hsTrend">
+            <div class="rv-head"><div class="rv-title">Espresso shot times</div><div class="rv-hint" id="hsTrendHint"></div></div>
+            <div><svg class="hs-chart" id="hsChart" viewBox="0 0 320 130" aria-hidden="true"></svg></div>
+            <div class="hs-legend"><span><i class="k-ok"></i>On target</span><span><i class="k-fast"></i>Fast</span><span><i class="k-long"></i>Slow</span><span><i class="k-channel"></i>Channelled</span><span class="z">Green band: 25 to 32 s</span></div>
+          </div>
+          <div class="hs-list" id="hsList"></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="brewdetail">
+        <header class="header">
+          <button type="button" class="back-circle" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-ink ic-14"></i></button>
+          <div class="header-title" id="bdTitle">Brew</div>
+        </header>
+        <div class="rv">
+          <div class="rv-card" data-verdict="bd"></div>
+          <div class="rv-card" data-replay="bd"></div>
+          <div class="rv-card">
+            <div class="rv-head"><div class="rv-title">Recipe</div><div class="rv-hint" id="bdWhen"></div></div>
+            <div class="bd-grid" id="bdRecipe"></div>
+          </div>
+          <div class="rv-card">
+            <div class="rv-head"><div class="rv-title">Next time</div></div>
+            <div class="rv-nbig" id="bdAdvice"></div>
+            <div class="rv-vsub" id="bdWhy"></div>
+          </div>
+          <div class="rv-actions">
+            <button type="button" class="btn-primary" id="bdApply">Try the change</button>
+            <button type="button" class="btn-secondary" id="bdAgain">Brew this again</button>
+            <button type="button" class="btn-ghost" id="bdDelete">Delete</button>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="screen" data-screen="pick">
+        <header class="header">
+          <button type="button" class="back-circle" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-ink ic-14"></i></button>
+          <div class="header-title">Choose a pattern</div>
+          <button type="button" class="back-circle help-btn" data-help="pick" aria-label="What am I looking at?"><i class="fa-solid fa-question icon-fa ic-ink ic-14"></i></button>
+        </header>
+        <nav class="crumbs" aria-label="Steps"></nav>
+        <div class="lv-pats" id="lvPatterns"></div>
+        <div class="lv-model-card" id="lvModelCard" role="button" tabindex="0" aria-label="Watch the pour again">
+          <div class="lv-demo">
+            <canvas id="lvDemoCanvas" width="120" height="120"></canvas>
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="lv-demo-ring hidden" id="lvDemoRing" cx="50" cy="50" r="8"/></svg>
+          </div>
+          <div class="lv-demo-cue" id="lvDemoCue"></div>
+          <div class="lv-model-hint" id="lvModelHint"></div>
+        </div>
+        <p class="lv-why" id="lvWhy"></p>
+        <button type="button" class="btn-primary block" id="lvGo">Pour</button>
+      </section>
+
+      <section class="screen" data-screen="pour">
+        <div class="po" id="po">
+          <video id="pourVideo" class="po-video" autoplay playsinline muted></video>
+          <div class="po-top">
+            <button type="button" class="back-circle glass" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-cream ic-14"></i></button>
+            <div class="po-title" id="poTitle"></div>
+            <button type="button" class="back-circle glass" data-help="pour" aria-label="What am I looking at?"><i class="fa-solid fa-question icon-fa ic-cream ic-14"></i></button>
+          </div>
+          <nav class="crumbs dark" aria-label="Steps"></nav>
+          <div class="po-cup" id="poCup">
+            <canvas id="poCanvas"></canvas>
+            <svg class="po-guide" id="poGuide" viewBox="0 0 100 100" aria-hidden="true">
+              <defs><marker id="poArrow" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M.5 .5 L5 3 L.5 5.5" class="po-arrow"/></marker></defs>
+              <circle class="po-rim" cx="50" cy="50" r="48"/>
+              <g class="po-half"><circle cx="50" cy="50" r="34.5"/><text x="50" y="13.2">Fill to here</text></g>
+              <path class="po-route" id="poRoute" d=""/>
+              <g class="po-swirl" id="poSwirl"><circle cx="50" cy="50" r="13"/><g class="po-spin"><path d="M48.4 35.2 L51.6 37 L48.4 38.8"/><path d="M48.4 35.2 L51.6 37 L48.4 38.8" transform="rotate(120 50 50)"/><path d="M48.4 35.2 L51.6 37 L48.4 38.8" transform="rotate(240 50 50)"/></g></g>
+              <path class="po-now" id="poNow" d=""/>
+              <path class="po-wig" id="poWig" d=""/>
+              <g class="po-start" id="poStart"><circle class="po-ripple" r="3.2"/><circle class="po-ripple late" r="3.2"/><circle class="po-start-dot" r="3.2"/><text y="-6.5">Start here</text></g>
+              <circle class="po-halo" id="poHalo" r="19" cx="50" cy="50"/>
+              <circle class="po-target" id="poTarget" r="3.2" cx="50" cy="50"/>
+              <circle class="po-spout" id="poSpout" r="2.4" cx="50" cy="50"/>
+            </svg>
+            <div class="po-height" id="poHeight">
+              <span class="po-h-lab">High<small>milk sinks</small></span>
+              <div class="po-h-bar"><i class="po-h-band" id="poBand"></i><i class="po-h-mark" id="poMark"></i></div>
+              <span class="po-h-lab">Close<small>white shows</small></span>
+            </div>
+          </div>
+          <div class="po-cue" id="poCue">
+            <div class="po-say"><b id="poStep"></b><span id="poCueText"></span></div>
+            <div class="ps-panes" id="psPanes">
+              <figure class="ps-pane ghost" id="psDoPane">
+                <figcaption id="psDoLab">Do this</figcaption>
+                <svg class="po-scene" viewBox="0 0 132 100" aria-hidden="true">
+                  <defs><clipPath id="psDoClip"><path d="M36 58 L42 94 H90 L96 58 Z"/></clipPath></defs>
+                  <rect class="ps-liquid" id="psDoLiq" x="30" y="80" width="72" height="20" clip-path="url(#psDoClip)"/>
+                  <path class="ps-cup" d="M36 58 L42 94 H90 L96 58"/>
+                  <path class="ps-half" id="psDoHalf" d="M38.5 76 H93.5"/>
+                  <line class="ps-stream ghost" id="psDoSt" x1="0" x2="0" y1="0" y2="0"/>
+                  <g class="ps-jug ghost" id="psDoJug"><path d="M0 0 L6.5 2.2 H20 L22.5 18.5 Q22.5 21 20 21 H6 Q3.6 21 3.8 18.5 L5.8 6.5 Q3 4 0 0 Z"/><path class="ps-handle" d="M20.4 6 C27 6 27.6 16 21.9 16"/></g>
+                </svg>
+              </figure>
+              <figure class="ps-pane you" id="psYouPane">
+                <figcaption id="psYouLab">You</figcaption>
+                <svg class="po-scene" viewBox="0 0 132 100" aria-hidden="true">
+                  <defs><clipPath id="psYouClip"><path d="M36 58 L42 94 H90 L96 58 Z"/></clipPath></defs>
+                  <rect class="ps-liquid" id="psYouLiq" x="30" y="80" width="72" height="20" clip-path="url(#psYouClip)"/>
+                  <path class="ps-cup" d="M36 58 L42 94 H90 L96 58"/>
+                  <path class="ps-half" id="psYouHalf" d="M38.5 76 H93.5"/>
+                  <line class="ps-stream you" id="psYouSt" x1="0" x2="0" y1="0" y2="0"/>
+                  <g class="ps-jug you" id="psYouJug"><path d="M0 0 L6.5 2.2 H20 L22.5 18.5 Q22.5 21 20 21 H6 Q3.6 21 3.8 18.5 L5.8 6.5 Q3 4 0 0 Z"/><path class="ps-handle" d="M20.4 6 C27 6 27.6 16 21.9 16"/></g>
+                </svg>
+              </figure>
+            </div>
+            <p class="ps-key hidden" id="psKey"><i class="ok"></i>Right<i class="off"></i>Adjust</p>
+            <div class="po-steps" id="poSteps"></div>
+          </div>
+          <div class="po-wait" id="poWait">
+            <div class="po-wait-art" aria-hidden="true"><i class="po-wait-ring"></i><i class="fa-solid fa-hand-pointer po-wait-hand"></i><i class="po-wait-phone"></i></div>
+            <b id="poWaitHead">Hold the ring above your phone</b>
+            <span id="poWaitText">Level with the phone, engraved side down, about 20 cm above the camera at the top.</span>
+            <button type="button" class="btn-glass" id="poFinger">Use your finger instead</button>
+          </div>
+          <div class="po-debug" id="poDebug"></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="art">
+        <header class="header">
+          <button type="button" class="back-circle" data-back="1" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-ink ic-14"></i></button>
+          <div class="header-title" id="artTitle">Your pour</div>
+          <button type="button" class="back-circle help-btn" data-help="art" aria-label="What am I looking at?"><i class="fa-solid fa-question icon-fa ic-ink ic-14"></i></button>
+        </header>
+        <nav class="crumbs" aria-label="Steps"></nav>
+        <div class="rv">
+          <div class="art-cmp" id="artCmp">
+            <figure><canvas id="artMine" width="320" height="320"></canvas><figcaption>Yours</figcaption></figure>
+            <figure id="artGoalFig"><canvas id="artGoal" width="320" height="320"></canvas><figcaption>Target</figcaption></figure>
+          </div>
+          <div class="rv-card">
+            <div class="rv-head"><div class="rv-title" id="artTipHead">Next time</div><div class="rv-hint" id="artTipStep"></div></div>
+            <div class="rv-nbig" id="artTip"></div>
+            <div class="rv-vsub" id="artWhy"></div>
+          </div>
+          <div class="rv-actions">
+            <button type="button" class="btn-primary" id="artAgain">Try again</button>
+            <button type="button" class="btn-secondary" id="artDone">Done</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="tutor">
+        <div class="tu-page" id="tuPage">
+          <div class="tu-top">
+            <button type="button" class="back-circle glass" id="tuBack" aria-label="Back"><i class="fa-solid fa-chevron-left icon-fa ic-cream ic-14"></i></button>
+            <div class="tu-segs" id="tuSegs"></div>
+            <button type="button" class="tu-skip" id="tuSkip">Skip</button>
+          </div>
+          <div class="tu-headbox" id="tuHeadBox">
+            <div class="tu-kicker" id="tuKicker"></div>
+            <h1 class="tu-head" id="tuHead"></h1>
+            <p class="tu-lede" id="tuLede"></p>
+            <p class="tu-why hidden" id="tuWhy"></p>
+          </div>
+          <div class="tu-card" id="tuCard">
+            <div class="tu-scene" id="tuScene"></div>
+          </div>
+          <div class="tu-note" id="tuNote">
+            <div class="tu-count" id="tuCount"></div>
+            <h2 class="tu-title" id="tuTitle"></h2>
+            <p class="tu-text" id="tuText"></p>
+          </div>
+          <div class="tu-need" id="tuNeed"></div>
+          <button type="button" class="btn-primary" id="tuNext">Next</button>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+      <i class="top-fade" aria-hidden="true"></i>
+      <i class="tu-curtain" id="tuCurtain" aria-hidden="true"></i>
+      <nav class="tabbar lg" id="tabbar" aria-label="Main">
+        <i class="tab-lens" id="tabLens"></i>
+        <button type="button" data-tab="home"><i class="fa-solid fa-house"></i><span>Home</span></button>
+        <button type="button" data-tab="history"><i class="fa-solid fa-chart-line"></i><span>History</span></button>
+      </nav>
+      <div class="sheet-scrim" id="sheetScrim"></div>
+      <div class="sheet lg" id="sheet" role="dialog" aria-modal="true"><i class="sheet-grab"></i><div id="sheetBody"></div></div>
+      <div class="ar" id="arRoot" aria-live="polite"></div>
+      <svg class="lg-defs" width="0" height="0" aria-hidden="true">
+        <filter id="lgRefract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.009 0.014" numOctaves="2" seed="4" result="n"/>
+          <feGaussianBlur in="n" stdDeviation="2.5" result="nb"/>
+          <feDisplacementMap in="SourceGraphic" in2="nb" scale="34" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="lgRefractSoft" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="4" result="n"/>
+          <feGaussianBlur in="n" stdDeviation="3" result="nb"/>
+          <feDisplacementMap in="SourceGraphic" in2="nb" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </svg>
+    </div>
+    <div class="phone-home-indicator"></div>
+  </div>
+</div>
+<div class="gl-veil" id="glVeil"></div>
+<script src="script.js"></script>
+</body>
+</html>
